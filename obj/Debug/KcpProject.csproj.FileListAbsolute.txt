@@ -1,0 +1,6 @@
+D:\Projects\study2\carmackfx-csharp\bin\Debug\KcpProject.exe.config
+D:\Projects\study2\carmackfx-csharp\bin\Debug\KcpProject.exe
+D:\Projects\study2\carmackfx-csharp\bin\Debug\KcpProject.pdb
+D:\Projects\study2\carmackfx-csharp\obj\Debug\KcpProject.csprojResolveAssemblyReference.cache
+D:\Projects\study2\carmackfx-csharp\obj\Debug\KcpProject.exe
+D:\Projects\study2\carmackfx-csharp\obj\Debug\KcpProject.pdb
