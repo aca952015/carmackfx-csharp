@@ -1,8 +1,0 @@
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\KcpProject.exe.config
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\KcpProject.exe
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\KcpProject.pdb
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Client.dll
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Client.pdb
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.csprojResolveAssemblyReference.cache
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\KcpProject.exe
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\KcpProject.pdb
