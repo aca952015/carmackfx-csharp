@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace CarmackFX.Client.Core
+namespace CarmackFX.Client.Socket
 {
     public class SwitchQueue<T> where T : class
     {

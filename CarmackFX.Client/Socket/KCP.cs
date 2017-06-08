@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace CarmackFX.Client.Core
+namespace CarmackFX.Client.Socket
 {
     public class KCP
     {

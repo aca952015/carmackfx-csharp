@@ -5,7 +5,7 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 
-namespace CarmackFX.Client.Core
+namespace CarmackFX.Client.Socket
 {
     // 客户端随机生成conv并作为后续与服务器通信
     public class UdpSocket
