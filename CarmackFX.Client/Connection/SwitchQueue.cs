@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 
-namespace CarmackFX.Client.Socket
+namespace CarmackFX.Client.Connection
 {
-    public class SwitchQueue<T> where T : class
+    class SwitchQueue<T> where T : class
     {
         private Queue mConsumeQueue;
         private Queue mProduceQueue;

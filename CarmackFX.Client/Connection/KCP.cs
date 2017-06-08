@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace CarmackFX.Client.Socket
+namespace CarmackFX.Client.Connection
 {
-    public class KCP
+    class KCP
     {
         public const int IKCP_RTO_NDL = 30;  // no delay min rto
         public const int IKCP_RTO_MIN = 100; // normal min rto

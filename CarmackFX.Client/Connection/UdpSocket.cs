@@ -5,10 +5,10 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 
-namespace CarmackFX.Client.Socket
+namespace CarmackFX.Client.Connection
 {
     // 客户端随机生成conv并作为后续与服务器通信
-    public class UdpSocket
+    class UdpSocket
     {
         private static readonly DateTime utc_time = new DateTime(1970, 1, 1);
 
