@@ -47,7 +47,7 @@ namespace CarmackFX.Example
 
         static void Main(string[] args)
         {
-            Resolver.Register(typeof(IAuthService<AuthIn>));
+            Resolver.Register<IAuthService<AuthIn>>();
 
             var connection = Resolver.Resolve<IConnectionService>();
             connection.Config.Host = "127.0.0.1";
