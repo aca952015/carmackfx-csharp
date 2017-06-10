@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarmackFX.Client.Services
+namespace CarmackFX.Client.Auth
 {
     [ServiceType(Type = ServiceType.Auth)]
-    public interface IAuthService<T>
+    public interface IAuthService
     {
-        AuthResult Verify(T authIn);
+        Task<AuthResult> Verify<T>(T authIn);
     }
 }

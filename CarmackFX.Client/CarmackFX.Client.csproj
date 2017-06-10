@@ -46,16 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\AuthProxy.cs" />
+    <Compile Include="Game\GameProxy.cs" />
     <Compile Include="Auth\AuthResult.cs" />
+    <Compile Include="Auth\AuthService.cs" />
     <Compile Include="Connection\ConnectionConfig.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
-    <Compile Include="Game\GameProxy.cs" />
-    <Compile Include="NMock3\NMockTest.cs" />
+    <Compile Include="Message\ByteBuf.cs" />
+    <Compile Include="Message\ExceptionCode.cs" />
+    <Compile Include="Message\MessageException.cs" />
+    <Compile Include="Message\MessageManager.cs" />
+    <Compile Include="Message\MessageQueueItem.cs" />
+    <Compile Include="Message\MessageSuccess.cs" />
     <Compile Include="Protocol\IProtocolService.cs" />
     <Compile Include="Protocol\ProtocolConfig.cs" />
     <Compile Include="Protocol\ProtocolService.cs" />
-    <Compile Include="Resolver.cs" />
+    <Compile Include="ServiceManager.cs" />
     <Compile Include="Auth\IAuthService.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
     <Compile Include="ServiceInstance.cs" />
@@ -68,8 +73,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="NMock3\NMock3 Cheat Sheet.pdf" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Message\MessageIn.cs" />
+    <Compile Include="Message\MessageOut.cs" />
+    <Compile Include="Message\MessageType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

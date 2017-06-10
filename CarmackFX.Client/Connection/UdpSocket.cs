@@ -92,8 +92,21 @@ namespace CarmackFX.Client.Connection
 
         public void Close()
         {
-            mUdpClient.Close();
+	        try
+	        {
+		        mUdpClient.Close();
+			}
+			catch (Exception e)
+	        {
+	        }
+
+	        mUdpClient = null;
         }
+
+	    public bool IsOpen()
+	    {
+		    return mUdpClient != null;
+	    }
 
         void process_recv_queue()
         {

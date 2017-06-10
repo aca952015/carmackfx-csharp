@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CarmackFX.Client.Services
+namespace CarmackFX.Client.Auth
 {
     public class AuthResult
     {
@@ -8,6 +8,6 @@ namespace CarmackFX.Client.Services
         public string Username { get; set; }
 
         [JsonProperty("token")]
-        public string Token { get; set; }
+        public long Token { get; set; }
     }
 }

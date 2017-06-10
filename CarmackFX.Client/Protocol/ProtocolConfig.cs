@@ -2,6 +2,6 @@
 {
     public class ProtocolConfig
     {
-        public string Token { get; set; }
+        public long Token { get; set; }
     }
 }

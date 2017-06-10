@@ -1,7 +1,7 @@
 ﻿using CarmackFX.Client.Auth;
 using CarmackFX.Client.Connection;
+using CarmackFX.Client.Game;
 using CarmackFX.Client.Protocol;
-using CarmackFX.Client.Services;
 using NMock;
 using System;
 using System.Collections.Generic;
@@ -11,15 +11,16 @@ using System.Threading.Tasks;
 
 namespace CarmackFX.Client
 {
-    public static class Resolver
+    public static class ServiceManager
     {
         private static readonly Dictionary<Type, ServiceInstance> instances = new Dictionary<Type, ServiceInstance>();
         private static readonly MockFactory factory = new MockFactory();
 
-        static Resolver()
+        static ServiceManager()
         {
             Register(typeof(IConnectionService), new ConnectionService());
             Register(typeof(IProtocolService), new ProtocolService());
+			Register(typeof(IAuthService), new AuthService());
         }
 
         private static void Register(Type type, Object instance)
@@ -38,17 +39,13 @@ namespace CarmackFX.Client
             var si = new ServiceInstance();
             si.ServiceType = GetServiceType(type);
 
-            if(si.ServiceType == ServiceType.Auth)
+            if(si.ServiceType == ServiceType.Game)
             {
                 var mock = factory.CreateMock<T>();
                 T instance = mock.MockObject;
-                Object proxy = new AuthProxy(instance).GetTransparentProxy();
+                Object proxy = new GameProxy(instance).GetTransparentProxy();
 
                 si.Instance = proxy;
-            }
-            else if(si.ServiceType == ServiceType.Game)
-            {
-
             }
 
             instances.Add(type, si);

@@ -1,1 +1,15 @@
 D:\Projects\study2\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.csprojResolveAssemblyReference.cache
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Example.exe.config
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Example.exe
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Example.pdb
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Client.dll
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\NMock3.dll
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\Microsoft.Build.Utilities.v3.5.dll
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Client.pdb
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\NMock3.xml
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\zh-CHS\Microsoft.Build.Utilities.v3.5.resources.dll
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.csprojResolveAssemblyReference.cache
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.exe
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.pdb
