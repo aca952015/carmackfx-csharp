@@ -10,6 +10,7 @@ namespace CarmackFX.Client.Message
 	class MessageManager
 	{
 		public static readonly Dictionary<long, MessageQueueItem> queue = new Dictionary<long, MessageQueueItem>();
+		private static long meesageSeed = 0;
 
 		public static Task<TOut> Push<TIn, TOut>(MessageType type, TIn messageData)
 		{
@@ -17,6 +18,7 @@ namespace CarmackFX.Client.Message
 
 			MessageIn msgIn = new MessageIn()
 			{
+				Id = meesageSeed++,
 				Type = type,
 				Token = protocolService.Config.Token,
 				Data = JsonConvert.SerializeObject(messageData)

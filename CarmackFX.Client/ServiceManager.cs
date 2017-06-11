@@ -1,6 +1,5 @@
 ﻿using CarmackFX.Client.Auth;
 using CarmackFX.Client.Connection;
-using CarmackFX.Client.Game;
 using CarmackFX.Client.Protocol;
 using NMock;
 using System;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CarmackFX.Client.Proxy;
 
 namespace CarmackFX.Client
 {
@@ -18,32 +18,43 @@ namespace CarmackFX.Client
 
         static ServiceManager()
         {
-            Register(typeof(IConnectionService), new ConnectionService());
-            Register(typeof(IProtocolService), new ProtocolService());
-			Register(typeof(IAuthService), new AuthService());
+            Register<IConnectionService>(new ConnectionService());
+            Register<IProtocolService>(new ProtocolService());
+			Register<IAuthService>(new AuthService());
         }
 
-        private static void Register(Type type, Object instance)
+        public static void Register<T>(T instance)
+			where T : class
         {
-            var si = new ServiceInstance();
-            si.ServiceType = GetServiceType(type);
-            si.Instance = instance;
+	        var type = typeof(T);
 
-            instances.Add(type, si);
+	        var si = new ServiceInstance
+	        {
+		        ServiceType = GetServiceType(type),
+	        };
+
+	        if (si.ServiceType == ServiceType.Client)
+	        {
+		        Object proxy = new ClientProxy(instance).GetTransparentProxy();
+	        }
+
+	        instances.Add(type, si);
         }
 
         public static void Register<T>()
             where T : class
         {
             Type type = typeof(T);
-            var si = new ServiceInstance();
-            si.ServiceType = GetServiceType(type);
+	        var si = new ServiceInstance
+	        {
+		        ServiceType = GetServiceType(type)
+	        };
 
-            if(si.ServiceType == ServiceType.Game)
+	        if(si.ServiceType == ServiceType.Server)
             {
                 var mock = factory.CreateMock<T>();
                 T instance = mock.MockObject;
-                Object proxy = new GameProxy(instance).GetTransparentProxy();
+                Object proxy = new ServerProxy(instance).GetTransparentProxy();
 
                 si.Instance = proxy;
             }
@@ -69,7 +80,7 @@ namespace CarmackFX.Client
                 return (atts[0] as ServiceTypeAttribute).Type;
             }
 
-            return ServiceType.Game;
+            return ServiceType.Server;
         }
     }
 }

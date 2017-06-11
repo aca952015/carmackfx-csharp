@@ -11,6 +11,7 @@ namespace CarmackFX.Client
         Connection,
         Protocol,
         Auth,
-        Game,
+        Server,
+		Client
     }
 }

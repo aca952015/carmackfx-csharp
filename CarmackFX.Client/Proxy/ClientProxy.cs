@@ -7,13 +7,13 @@ using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarmackFX.Client.Game
+namespace CarmackFX.Client.Proxy
 {
-    class GameProxy : RealProxy
+    class ClientProxy : RealProxy
     {
         private object instance;
 
-        public GameProxy(object instance)
+        public ClientProxy(object instance)
         {
             this.instance = instance;
         }

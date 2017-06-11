@@ -6,6 +6,7 @@ namespace CarmackFX.Client.Message
 	{
 		public int Size { get; set; }
 		public long Id { get; set; }
+		public MessageMode Mode { get; set; }
 		public MessageSuccess Success { get; set; }
 		public String Data { get; set; }
 
@@ -18,6 +19,7 @@ namespace CarmackFX.Client.Message
 
 				msgOut.Size = bb.ReadInt();
 				msgOut.Id = bb.ReadLong();
+				msgOut.Mode = (MessageMode)bb.ReadByte();
 				msgOut.Success = (MessageSuccess)bb.ReadByte();
 				if (msgOut.Success == MessageSuccess.SUCCESS)
 				{

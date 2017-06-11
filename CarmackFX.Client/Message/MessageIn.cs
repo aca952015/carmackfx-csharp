@@ -18,7 +18,6 @@ namespace CarmackFX.Client.Message
 
 		public MessageIn()
 		{
-			this.Id = DateTime.Now.Ticks;
 		}
 
 		public byte[] Build()

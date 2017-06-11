@@ -30,7 +30,14 @@ namespace CarmackFX.Client.Connection
 					MessageOut msgOut = MessageOut.Parse(buf);
 					if (msgOut != null)
 					{
-						MessageManager.Completed(msgOut);
+						if (msgOut.Mode == MessageMode.Result)
+						{
+							MessageManager.Completed(msgOut);
+						}
+						else if (msgOut.Mode == MessageMode.Callback)
+						{
+							
+						}
 					}
 				});
 
@@ -64,10 +71,16 @@ namespace CarmackFX.Client.Connection
 
 	    public void Send(MessageIn msgIn)
 	    {
-		    Task.Run(new Action(() =>
+		    try
 		    {
-				client.Send(msgIn.Build());
-		    }));
+			    if (client != null && client.IsOpen())
+			    {
+				    client.Send(msgIn.Build());
+			    }
+		    }
+			catch (Exception e)
+		    {
+		    }
 	    }
 	}
 }
