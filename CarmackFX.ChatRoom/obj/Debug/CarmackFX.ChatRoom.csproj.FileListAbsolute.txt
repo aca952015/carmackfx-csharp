@@ -15,3 +15,5 @@ D:\Projects\Personal\carmackfx-csharp\CarmackFX.ChatRoom\bin\Debug\CarmackFX.Cli
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.ChatRoom\bin\Debug\Newtonsoft.Json.xml
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.ChatRoom\bin\Debug\NMock3.xml
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.ChatRoom\bin\Debug\zh-CHS\Microsoft.Build.Utilities.v3.5.resources.dll
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.ChatRoom\bin\Debug\Microsoft.Build.Utilities.v3.5.xml
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.ChatRoom\obj\Debug\CarmackFX.ChatRoom.csproj.CoreCompileInputs.cache

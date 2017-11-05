@@ -26,7 +26,7 @@ namespace CarmackFX.ChatRoom
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			ServiceManager.Register<RoomService>();
-			ServiceManager.Register<ClientService>(new ClientService());
+			ServiceManager.Register(new ClientService());
 
 			var connection = ServiceManager.Resolve<IConnectionService>();
 			connection.Config.Host = "127.0.0.1";

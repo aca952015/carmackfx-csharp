@@ -13,3 +13,5 @@ D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\zh-CHS\Microso
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.csprojResolveAssemblyReference.cache
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.exe
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.pdb
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\Microsoft.Build.Utilities.v3.5.xml
+D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.csproj.CoreCompileInputs.cache

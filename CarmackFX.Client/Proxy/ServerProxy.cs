@@ -11,11 +11,9 @@ namespace CarmackFX.Client.Proxy
 {
     class ServerProxy : RealProxy
     {
-        private object instance;
-
-        public ServerProxy(object instance)
+        public ServerProxy(Type proxy)
+			: base(proxy)
         {
-            this.instance = instance;
         }
 
         public override IMessage Invoke(IMessage msg)

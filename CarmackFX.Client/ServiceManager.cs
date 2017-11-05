@@ -1,7 +1,6 @@
 ﻿using CarmackFX.Client.Auth;
 using CarmackFX.Client.Connection;
 using CarmackFX.Client.Protocol;
-using NMock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,6 @@ namespace CarmackFX.Client
     public static class ServiceManager
     {
         private static readonly Dictionary<Type, ServiceInstance> instances = new Dictionary<Type, ServiceInstance>();
-        private static readonly MockFactory factory = new MockFactory();
 
         static ServiceManager()
         {
@@ -31,12 +29,8 @@ namespace CarmackFX.Client
 	        var si = new ServiceInstance
 	        {
 		        ServiceType = GetServiceType(type),
+				Instance = instance
 	        };
-
-	        if (si.ServiceType == ServiceType.Client)
-	        {
-		        Object proxy = new ClientProxy(instance).GetTransparentProxy();
-	        }
 
 	        instances.Add(type, si);
         }
@@ -52,11 +46,9 @@ namespace CarmackFX.Client
 
 	        if(si.ServiceType == ServiceType.Server)
             {
-                var mock = factory.CreateMock<T>();
-                T instance = mock.MockObject;
-                Object proxy = new ServerProxy(instance).GetTransparentProxy();
+                Object instance = new ServerProxy(type).GetTransparentProxy();
 
-                si.Instance = proxy;
+                si.Instance = instance;
             }
 
             instances.Add(type, si);
