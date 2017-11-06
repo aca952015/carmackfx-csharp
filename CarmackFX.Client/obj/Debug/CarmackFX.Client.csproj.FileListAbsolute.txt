@@ -1,9 +1,0 @@
-D:\Projects\study2\carmackfx-csharp\CarmackFX.Client\obj\Debug\CarmackFX.Client.csprojResolveAssemblyReference.cache
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Client\obj\Debug\CarmackFX.Client.csprojResolveAssemblyReference.cache
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Client\bin\Debug\CarmackFX.Client.dll
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Client\bin\Debug\CarmackFX.Client.pdb
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Client\bin\Debug\Newtonsoft.Json.dll
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Client\bin\Debug\Newtonsoft.Json.xml
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Client\obj\Debug\CarmackFX.Client.dll
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Client\obj\Debug\CarmackFX.Client.pdb
-D:\Projects\Personal\carmackfx-csharp\CarmackFX.Client\obj\Debug\CarmackFX.Client.csproj.CoreCompileInputs.cache
