@@ -14,7 +14,7 @@ namespace CarmackFX.Example
         static void Main(string[] args)
         {
             var connection = ServiceManager.Resolve<IConnectionService>();
-            connection.Config.Host = "127.0.0.1";
+            connection.Config.Host = "app.crossgay.club";
             connection.Config.Port = 18000;
             connection.Connect();
 

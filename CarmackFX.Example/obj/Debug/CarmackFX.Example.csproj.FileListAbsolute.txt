@@ -15,3 +15,14 @@ D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Exam
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.pdb
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\bin\Debug\Microsoft.Build.Utilities.v3.5.xml
 D:\Projects\Personal\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Example.exe.config
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Example.exe
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Example.pdb
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Client.dll
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\bin\Debug\CarmackFX.Client.pdb
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.exe
+C:\Users\Administrator\Documents\repo\carmackfx-csharp\CarmackFX.Example\obj\Debug\CarmackFX.Example.pdb

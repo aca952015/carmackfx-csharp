@@ -4,6 +4,6 @@ namespace CarmackFX.Client.Message
 	{
 		HEARTBEAT = 0,
 		AUTH = 1,
-		GAME = 2,
+		SERVER = 2,
 	}
 }

@@ -34,13 +34,25 @@ namespace CarmackFX.Client.Connection
 
         public void Connect(string host, UInt16 port)
         {
-            mSvrEndPoint = new IPEndPoint(IPAddress.Parse(host), port);
+            mSvrEndPoint = new IPEndPoint(IPAddress.Parse(GetIPAddress(host)), port);
             mUdpClient = new UdpClient(host, port);
             mUdpClient.Connect(mSvrEndPoint);
 
             init_kcp((UInt32)new Random((int)DateTime.Now.Ticks).Next(1, Int32.MaxValue));
 
             mUdpClient.BeginReceive(ReceiveCallback, this);
+        }
+
+        public string GetIPAddress(string host)
+        {
+            IPHostEntry hostinfo = Dns.GetHostEntry(host);
+            IPAddress[] ips = hostinfo.AddressList;
+            if(ips == null || ips.Length == 0)
+            {
+                return host;
+            }
+
+            return ips[0].ToString();
         }
 
         void init_kcp(UInt32 conv)

@@ -13,7 +13,7 @@ namespace CarmackFX.Client.Auth
 	{
 		public Task<AuthResult> Verify<T>(T authIn)
 		{
-			return MessageManager.Push<T, AuthResult>(MessageType.AUTH, authIn);
+			return MessageManager.Push<AuthResult>(MessageType.AUTH, authIn);
 		}
 	}
 }

@@ -47,6 +47,7 @@
     <Compile Include="Connection\SwitchQueue.cs" />
     <Compile Include="Connection\UdpSocket.cs" />
     <Compile Include="Message\MessageMode.cs" />
+    <Compile Include="Message\RpcMessageData.cs" />
     <Compile Include="Proxy\ClientProxy.cs" />
     <Compile Include="Proxy\ServerProxy.cs" />
     <Compile Include="Auth\AuthResult.cs" />

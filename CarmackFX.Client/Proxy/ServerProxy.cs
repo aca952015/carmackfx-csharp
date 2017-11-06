@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarmackFX.Client.Message;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -24,6 +25,8 @@ namespace CarmackFX.Client.Proxy
             try
             {
                 object result = null;
+
+                MessageManager.Push(method.ReflectedType.Name, method.Name, methodCall.Args).Start();
 
                 return new ReturnMessage(result, null, 0, methodCall.LogicalCallContext, methodCall);
             }

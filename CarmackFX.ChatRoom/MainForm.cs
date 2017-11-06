@@ -29,7 +29,7 @@ namespace CarmackFX.ChatRoom
 			ServiceManager.Register(new ClientService());
 
 			var connection = ServiceManager.Resolve<IConnectionService>();
-			connection.Config.Host = "127.0.0.1";
+			connection.Config.Host = "app.crossgay.club";
 			connection.Config.Port = 18000;
 			connection.Connect();
 
