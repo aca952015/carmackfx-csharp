@@ -8,6 +8,7 @@ namespace CarmackFX.Client.Message
 		public long Id { get; set; }
 		public MessageMode Mode { get; set; }
 		public MessageSuccess Success { get; set; }
+        public long Token { get; set; }
 		public String Data { get; set; }
 
 		public static MessageOut Parse(byte[] buff)
@@ -21,6 +22,7 @@ namespace CarmackFX.Client.Message
 				msgOut.Id = bb.ReadLong();
 				msgOut.Mode = (MessageMode)bb.ReadByte();
 				msgOut.Success = (MessageSuccess)bb.ReadByte();
+                msgOut.Token = bb.ReadLong();
 				if (msgOut.Success == MessageSuccess.SUCCESS)
 				{
 					msgOut.Data = bb.ReadString();

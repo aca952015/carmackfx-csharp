@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CarmackFX.Client.Auth
+namespace CarmackFX.Client.Security
 {
     public class AuthResult
     {

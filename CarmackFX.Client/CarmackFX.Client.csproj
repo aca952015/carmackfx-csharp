@@ -46,12 +46,14 @@
     <Compile Include="Connection\KCP.cs" />
     <Compile Include="Connection\SwitchQueue.cs" />
     <Compile Include="Connection\UdpSocket.cs" />
+    <Compile Include="Message\MessageAttribute.cs" />
     <Compile Include="Message\MessageMode.cs" />
-    <Compile Include="Message\RpcMessageData.cs" />
+    <Compile Include="Proxy\RpcMessageArgument.cs" />
+    <Compile Include="Proxy\RpcMessageData.cs" />
     <Compile Include="Proxy\ClientProxy.cs" />
     <Compile Include="Proxy\ServerProxy.cs" />
-    <Compile Include="Auth\AuthResult.cs" />
-    <Compile Include="Auth\AuthService.cs" />
+    <Compile Include="Security\AuthResult.cs" />
+    <Compile Include="Security\SecurityService.cs" />
     <Compile Include="Connection\ConnectionConfig.cs" />
     <Compile Include="Connection\ConnectionService.cs" />
     <Compile Include="Message\ByteBuf.cs" />
@@ -64,11 +66,11 @@
     <Compile Include="Protocol\ProtocolConfig.cs" />
     <Compile Include="Protocol\ProtocolService.cs" />
     <Compile Include="ServiceManager.cs" />
-    <Compile Include="Auth\IAuthService.cs" />
+    <Compile Include="Security\ISecurityService.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
     <Compile Include="ServiceInstance.cs" />
     <Compile Include="ServiceType.cs" />
-    <Compile Include="ServiceTypeAttribute.cs" />
+    <Compile Include="ServiceAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

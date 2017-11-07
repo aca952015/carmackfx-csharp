@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarmackFX.Client;
-using CarmackFX.Client.Auth;
+using CarmackFX.Client.Security;
 using CarmackFX.Client.Connection;
 using CarmackFX.Client.Protocol;
 
@@ -33,16 +33,17 @@ namespace CarmackFX.ChatRoom
 			connection.Config.Port = 18000;
 			connection.Connect();
 
-			var authService = ServiceManager.Resolve<IAuthService>();
-			var authIn = new AuthIn() { UserName = username, Password = "123456" };
-			var authTask = authService.Verify(authIn);
-			var authResult = authTask.ConfigureAwait(true).GetAwaiter().GetResult();
+            var authTask = ServiceManager.Resolve<ISecurityService>()
+                .Auth(new AuthIn() { UserName = username, Password = "123456" });
 
-			var protocolService = ServiceManager.Resolve<IProtocolService>();
-			protocolService.Config.Token = authResult.Token;
-
-			var roomService = ServiceManager.Resolve<RoomService>();
-			roomService.Join();
+            authTask.Start();
+            authTask.ContinueWith(JoinRoom);
 		}
+
+        private void JoinRoom(Task<AuthResult> task)
+        {
+            var roomService = ServiceManager.Resolve<RoomService>();
+            roomService.Join();
+        }
 	}
 }

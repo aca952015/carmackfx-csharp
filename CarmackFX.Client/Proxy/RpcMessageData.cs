@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarmackFX.Client.Message
+namespace CarmackFX.Client.Proxy
 {
     class RpcMessageData
     {
         public String ServiceName { get; set; }
         public String MethodName { get; set; }
-        public String[] Arguments { get; set; }
+        public RpcMessageArgument[] Arguments { get; set; }
     }
 }

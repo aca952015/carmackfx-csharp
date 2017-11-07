@@ -7,7 +7,7 @@ using CarmackFX.Client;
 
 namespace CarmackFX.ChatRoom
 {
-	[ServiceType(Type = ServiceType.Client)]
+	[Service(ServiceType.Client)]
 	class ClientService
 	{
 		public void Broadcast(string content)

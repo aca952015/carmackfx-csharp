@@ -12,27 +12,6 @@ namespace CarmackFX.Client.Message
 		public static readonly Dictionary<long, MessageQueueItem> queue = new Dictionary<long, MessageQueueItem>();
 		private static long meesageSeed = 0;
 
-        public static Task<String> Push(String serviceName, String methodName, object[] args)
-        {
-            RpcMessageData data = new RpcMessageData();
-            data.ServiceName = serviceName;
-            data.MethodName = methodName;
-
-            if (args != null && args.Length == 0)
-            {
-                List<String> values = new List<string>();
-
-                foreach (var arg in args)
-                {
-                    values.Add(JsonConvert.SerializeObject(arg));
-                }
-
-                data.Arguments = values.ToArray();
-            }
-
-            return Push<String>(MessageType.SERVER, data);
-        }
-
 		public static Task<TOut> Push<TOut>(MessageType messageType, object messageData)
 		{
 			IProtocolService protocolService = ServiceManager.Resolve<IProtocolService>();

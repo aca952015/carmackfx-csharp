@@ -8,9 +8,11 @@ using CarmackFX.Client.Message;
 
 namespace CarmackFX.ChatRoom
 {
-	[ServiceType(Type = ServiceType.Server)]
+	[Service(ServiceType.Server)]
+    [Message(MessageType.Internal)]
 	public interface RoomService
 	{
-		Task<Boolean> Join();
+		Task Join();
+        Task Chat(string msg);
 	}
 }

@@ -7,7 +7,7 @@ using CarmackFX.Client.Message;
 
 namespace CarmackFX.Client.Connection
 {
-    [ServiceType(Type = ServiceType.Connection)]
+    [Service(ServiceType.Connection)]
     public interface IConnectionService
     {
         ConnectionConfig Config { get; }

@@ -1,4 +1,5 @@
 ﻿using CarmackFX.Client.Message;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,23 @@ namespace CarmackFX.Client.Proxy
 {
     class ServerProxy : RealProxy
     {
+        private ServiceType serviceType = ServiceType.Server;
+        private MessageType messageType = MessageType.Public;
+
         public ServerProxy(Type proxy)
 			: base(proxy)
         {
+            ServiceAttribute sattr = proxy.GetCustomAttribute<ServiceAttribute>();
+            if(sattr != null)
+            {
+                serviceType = sattr.ServiceType;
+            }
+
+            MessageAttribute mttr = proxy.GetCustomAttribute<MessageAttribute>();
+            if (mttr != null)
+            {
+                messageType = mttr.MessageType;
+            }
         }
 
         public override IMessage Invoke(IMessage msg)
@@ -24,9 +39,39 @@ namespace CarmackFX.Client.Proxy
 
             try
             {
-                object result = null;
+                RpcMessageData data = new RpcMessageData();
+                data.ServiceName = method.ReflectedType.Name;
+                data.MethodName = method.Name;
 
-                MessageManager.Push(method.ReflectedType.Name, method.Name, methodCall.Args).Start();
+                if (methodCall.HasVarArgs)
+                {
+                    List<RpcMessageArgument> args = new List<RpcMessageArgument>();
+
+                    var prams = method.GetParameters();
+
+                    for (int pos = 0; pos < prams.Length; pos++)
+                    {
+                        RpcMessageArgument arg = new RpcMessageArgument();
+                        arg.ArgumentName = prams[pos].Name;
+                        arg.IsValueType = prams[pos].ParameterType.IsValueType;
+
+                        if (methodCall.Args[pos] != null)
+                        {
+                            if (arg.IsValueType)
+                            {
+                                arg.ArgumentValue = methodCall.Args[pos].ToString();
+                            }
+                            else
+                            {
+                                arg.ArgumentValue = JsonConvert.SerializeObject(methodCall.Args[pos]);
+                            }
+                        }
+                    }
+
+                    data.Arguments = args.ToArray();
+                }
+
+                object result = MessageManager.Push<string>(messageType, data);
 
                 return new ReturnMessage(result, null, 0, methodCall.LogicalCallContext, methodCall);
             }

@@ -10,7 +10,6 @@ namespace CarmackFX.Client
     {
         Connection,
         Protocol,
-        Auth,
         Server,
 		Client
     }
