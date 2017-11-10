@@ -43,7 +43,10 @@ namespace CarmackFX.ChatRoom
         private void JoinRoom(Task<AuthResult> task)
         {
             var roomService = ServiceManager.Resolve<RoomService>();
-            roomService.Join();
+			roomService.Join().ContinueWith((joinTask) => 
+			{
+				
+			});
         }
 	}
 }

@@ -16,14 +16,18 @@ namespace CarmackFX.Client.Security
 		{
             return new Task<AuthResult>(() =>
             {
-                AuthResult result = MessageManager.Push<AuthResult>(MessageType.Security, authIn).ConfigureAwait(true).GetAwaiter().GetResult();
-                if(result != null && result.Token > 0)
+                ServiceResponse response = MessageManager.Push(MessageType.Security, authIn).ConfigureAwait(true).GetAwaiter().GetResult();
+                if(response != null && response.IsSuccess)
                 {
-                    IProtocolService protocol = ServiceManager.Resolve<IProtocolService>();
-                    protocol.Config.Token = result.Token;
+					AuthResult result = response.Get<AuthResult>();
+					if (result != null && result.Token > 0)
+					{
+						IProtocolService protocol = ServiceManager.Resolve<IProtocolService>();
+						protocol.Config.Token = result.Token;
+					}
                 }
 
-                return result;
+                return null;
             });
 		}
 	}

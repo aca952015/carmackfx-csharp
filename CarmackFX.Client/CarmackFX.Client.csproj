@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -69,6 +71,8 @@
     <Compile Include="Security\ISecurityService.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
     <Compile Include="ServiceInstance.cs" />
+    <Compile Include="ServiceResponse.cs" />
+    <Compile Include="ServiceTask.cs" />
     <Compile Include="ServiceType.cs" />
     <Compile Include="ServiceAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

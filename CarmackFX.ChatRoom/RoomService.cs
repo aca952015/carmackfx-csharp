@@ -12,7 +12,7 @@ namespace CarmackFX.ChatRoom
     [Message(MessageType.Internal)]
 	public interface RoomService
 	{
-		Task Join();
-        Task Chat(string msg);
+		ServiceTask Join();
+		ServiceTask Chat(string msg);
 	}
 }

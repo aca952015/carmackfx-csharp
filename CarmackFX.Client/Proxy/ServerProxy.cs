@@ -71,7 +71,7 @@ namespace CarmackFX.Client.Proxy
                     data.Arguments = args.ToArray();
                 }
 
-                object result = MessageManager.Push<string>(messageType, data);
+                object result = MessageManager.Push(messageType, data);
 
                 return new ReturnMessage(result, null, 0, methodCall.LogicalCallContext, methodCall);
             }

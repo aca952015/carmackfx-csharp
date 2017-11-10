@@ -12,7 +12,7 @@ namespace CarmackFX.Client.Message
 		public static readonly Dictionary<long, MessageQueueItem> queue = new Dictionary<long, MessageQueueItem>();
 		private static long meesageSeed = 0;
 
-		public static Task<TOut> Push<TOut>(MessageType messageType, object messageData)
+		public static Task<ServiceResponse> Push(MessageType messageType, object messageData)
 		{
 			IProtocolService protocolService = ServiceManager.Resolve<IProtocolService>();
 
@@ -31,43 +31,58 @@ namespace CarmackFX.Client.Message
 
 			queue.Add(msgIn.Id, queyeItem);
 
-			Task<TOut> task = new Task<TOut>(() =>
+			ServiceTask task = new ServiceTask(() =>
 			{
 				IConnectionService service = ServiceManager.Resolve<IConnectionService>();
 				service.Send(msgIn);
 
-				DateTime start = DateTime.Now;
-				while (true)
+				try
 				{
-					if ((DateTime.Now - start).TotalSeconds > 2)
+					DateTime start = DateTime.Now;
+					while (true)
 					{
-						break;
+						if ((DateTime.Now - start).TotalSeconds > 2)
+						{
+							break;
+						}
+
+						if (queyeItem.Result != null)
+						{
+							queue.Remove(msgIn.Id);
+
+							if (queyeItem.Result.Success == MessageSuccess.SUCCESS)
+							{
+								return new ServiceResponse()
+								{
+									IsSuccess = true,
+									Data = queyeItem.Result.Data
+								};
+							}
+							else if (queyeItem.Result.Success == MessageSuccess.SERVERERROR)
+							{
+								throw new MessageException(ExceptionCode.ServerError);
+							}
+							else if (queyeItem.Result.Success == MessageSuccess.DATAINVALID)
+							{
+								throw new MessageException(ExceptionCode.DataInvalid);
+							}
+						}
+
+						Task.Delay(10).Wait();
 					}
 
-					if (queyeItem.Result != null)
-					{
-						queue.Remove(msgIn.Id);
+					queue.Remove(msgIn.Id);
 
-						if (queyeItem.Result.Success == MessageSuccess.SUCCESS)
-						{
-							return JsonConvert.DeserializeObject<TOut>(queyeItem.Result.Data);
-						}
-						else if(queyeItem.Result.Success == MessageSuccess.SERVERERROR)
-						{
-							throw new MessageException(ExceptionCode.ServerError);
-						}
-						else if (queyeItem.Result.Success == MessageSuccess.DATAINVALID)
-						{
-							throw new MessageException(ExceptionCode.DataInvalid);
-						}
-					}
-
-                    Task.Delay(10).Wait();
+					throw new MessageException(ExceptionCode.Timeout);
 				}
-
-				queue.Remove(msgIn.Id);
-
-				throw new MessageException(ExceptionCode.Timeout);
+				catch(Exception ex)
+				{
+					return new ServiceResponse()
+					{
+						IsSuccess = false,
+						Error = ex
+					};
+				}
 			});
 
 			task.Start();
