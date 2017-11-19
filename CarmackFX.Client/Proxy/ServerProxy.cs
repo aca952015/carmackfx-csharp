@@ -43,9 +43,9 @@ namespace CarmackFX.Client.Proxy
                 data.ServiceName = method.ReflectedType.Name;
                 data.MethodName = method.Name;
 
-                if (methodCall.HasVarArgs)
+                if (methodCall.Args.Length > 0)
                 {
-                    List<RpcMessageArgument> args = new List<RpcMessageArgument>();
+                    IDictionary<string, RpcMessageArgument> args = new Dictionary<string, RpcMessageArgument>();
 
                     var prams = method.GetParameters();
 
@@ -66,9 +66,11 @@ namespace CarmackFX.Client.Proxy
                                 arg.ArgumentValue = JsonConvert.SerializeObject(methodCall.Args[pos]);
                             }
                         }
+
+						args.Add(arg.ArgumentName, arg);
                     }
 
-                    data.Arguments = args.ToArray();
+                    data.Arguments = args;
                 }
 
                 object result = MessageManager.Push(messageType, data);

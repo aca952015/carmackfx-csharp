@@ -10,6 +10,6 @@ namespace CarmackFX.Client.Proxy
     {
         public String ServiceName { get; set; }
         public String MethodName { get; set; }
-        public RpcMessageArgument[] Arguments { get; set; }
+        public IDictionary<String, RpcMessageArgument> Arguments { get; set; }
     }
 }

@@ -57,7 +57,6 @@
     <Compile Include="Message\MessageMode.cs" />
     <Compile Include="Proxy\RpcMessageArgument.cs" />
     <Compile Include="Proxy\RpcMessageData.cs" />
-    <Compile Include="Proxy\ClientProxy.cs" />
     <Compile Include="Proxy\ServerProxy.cs" />
     <Compile Include="Security\AuthResult.cs" />
     <Compile Include="Security\SecurityService.cs" />

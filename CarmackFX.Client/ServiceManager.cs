@@ -22,7 +22,7 @@ namespace CarmackFX.Client
 			Register<ISecurityService>(new SecurityService());
         }
 
-        public static void Register<T>(T instance)
+        public static T Register<T>(T instance)
 			where T : class
         {
 	        var type = typeof(T);
@@ -34,9 +34,11 @@ namespace CarmackFX.Client
 	        };
 
 	        instances.Add(type.FullName, si);
+
+			return instance;
         }
 
-        public static void Register<T>()
+        public static T Register<T>()
             where T : class
         {
             Type type = typeof(T);
@@ -53,9 +55,11 @@ namespace CarmackFX.Client
             }
 
             instances.Add(type.FullName, si);
+
+			return (T)si.Instance;
         }
 
-		public static void Register(String name, object instance)
+		public static object Register(String name, object instance)
 		{
 			var si = new ServiceInstance
 			{
@@ -64,6 +68,8 @@ namespace CarmackFX.Client
 			};
 
 			instances.Add(name, si);
+
+			return instance;
 		}
 
         public static T Resolve<T>()
