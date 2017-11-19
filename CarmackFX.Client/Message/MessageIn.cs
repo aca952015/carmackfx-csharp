@@ -32,7 +32,11 @@ namespace CarmackFX.Client.Message
 			bb.WriteLong(this.Id);
 			bb.WriteByte((byte)this.Type);
 			bb.WriteLong(this.Token);
-			bb.WriteBytes(content);
+
+			if (content != null)
+			{
+				bb.WriteBytes(content);
+			}
 
 			return data;
 		}

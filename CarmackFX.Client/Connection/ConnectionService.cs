@@ -16,6 +16,8 @@ namespace CarmackFX.Client.Connection
 
 		public ConnectionConfig Config { get; private set; }
 
+		private DateTime lastHeartbeat;
+
 
 		public ConnectionService()
 		{
@@ -46,27 +48,42 @@ namespace CarmackFX.Client.Connection
 					}
 					catch (Exception ex)
 					{
-						var errorService = ServiceManager.Resolve<IErrorService>();
-						if(errorService != null)
-						{
-							errorService.OnError(ex);
-						}
+						ServiceManager.OnError(ex);
 					}
 				});
 
 				// 绑定端口
 				client.Connect(this.Config.Host, this.Config.Port);
 
+				lastHeartbeat = DateTime.Now;
+
 				while (true)
 				{
 					if (client != null && client.IsOpen())
 					{
 						client.Update();
+
+						SendHeartbeat();
 					}
 
 					System.Threading.Thread.Sleep(10);
 				}
 			}));
+		}
+
+		private void SendHeartbeat()
+		{
+			// heartbeat
+			if ((DateTime.Now - lastHeartbeat).TotalSeconds > 2)
+			{
+				MessageIn messageIn = new MessageIn();
+				messageIn.Id = -1;
+				messageIn.Type = MessageType.Heartbeat;
+
+				Send(messageIn);
+
+				lastHeartbeat = DateTime.Now;
+			}
 		}
 
 		public void Disconnect()
@@ -91,8 +108,9 @@ namespace CarmackFX.Client.Connection
 					client.Send(msgIn.Build());
 				}
 			}
-			catch (Exception e)
+			catch (Exception ex)
 			{
+				ServiceManager.OnError(ex);
 			}
 		}
 	}

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CarmackFX.Client.Proxy;
+using CarmackFX.Client.Error;
 
 namespace CarmackFX.Client
 {
@@ -92,5 +93,26 @@ namespace CarmackFX.Client
 
             return ServiceType.Server;
         }
-    }
+
+		internal static void OnError(Exception ex)
+		{
+			try
+			{
+				var errorService = ServiceManager.Resolve<IErrorService>();
+				if (errorService != null)
+				{
+					errorService.OnError(ex);
+				}
+				else
+				{
+					Console.WriteLine(ex.ToString());
+				}
+			}
+			catch (Exception nex)
+			{
+				Console.WriteLine(ex.ToString());
+				Console.WriteLine(nex.ToString());
+			}
+		}
+	}
 }
