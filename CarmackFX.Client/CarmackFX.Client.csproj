@@ -45,9 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Callback\CallbackData.cs" />
+    <Compile Include="Callback\CallbackManager.cs" />
     <Compile Include="Connection\KCP.cs" />
     <Compile Include="Connection\SwitchQueue.cs" />
     <Compile Include="Connection\UdpSocket.cs" />
+    <Compile Include="Error\ErrorService.cs" />
+    <Compile Include="Error\MethodArgsNotMatchException.cs" />
+    <Compile Include="Error\MethodNotFoundException.cs" />
     <Compile Include="Message\MessageAttribute.cs" />
     <Compile Include="Message\MessageMode.cs" />
     <Compile Include="Proxy\RpcMessageArgument.cs" />
@@ -85,5 +90,6 @@
     <Compile Include="Message\MessageOut.cs" />
     <Compile Include="Message\MessageType.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

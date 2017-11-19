@@ -3,6 +3,7 @@
 	public enum MessageMode
 	{
 		Result,
-		Callback
+		Callback,
+		Error
 	}
 }

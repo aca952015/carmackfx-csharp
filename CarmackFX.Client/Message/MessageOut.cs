@@ -23,7 +23,7 @@ namespace CarmackFX.Client.Message
 				msgOut.Mode = (MessageMode)bb.ReadByte();
 				msgOut.Success = (MessageSuccess)bb.ReadByte();
                 msgOut.Token = bb.ReadLong();
-				if (msgOut.Success == MessageSuccess.SUCCESS)
+				if (msgOut.Success == MessageSuccess.Success)
 				{
 					msgOut.Data = bb.ReadString();
 				}

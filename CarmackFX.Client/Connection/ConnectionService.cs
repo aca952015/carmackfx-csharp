@@ -5,38 +5,51 @@ using System.Text;
 using System.Threading.Tasks;
 using CarmackFX.Client.Message;
 using CarmackFX.Client.Protocol;
+using CarmackFX.Client.Callback;
+using CarmackFX.Client.Error;
 
 namespace CarmackFX.Client.Connection
 {
-    class ConnectionService : IConnectionService
-    {
-	    private UdpSocket client = null;
+	class ConnectionService : IConnectionService
+	{
+		private UdpSocket client = null;
 
-        public ConnectionConfig Config { get; private set; }
+		public ConnectionConfig Config { get; private set; }
 
 
-        public ConnectionService()
-        {
-            this.Config = new ConnectionConfig();
-        }
+		public ConnectionService()
+		{
+			this.Config = new ConnectionConfig();
+		}
 
-        public void Connect()
-        {
-	        Task.Run(new Action(() =>
-	        {
+		public void Connect()
+		{
+			Task.Run(new Action(() =>
+			{
 				// 创建一个实例
 				client = new UdpSocket((byte[] buf) =>
 				{
-					MessageOut msgOut = MessageOut.Parse(buf);
-					if (msgOut != null)
+					try
 					{
-						if (msgOut.Mode == MessageMode.Result)
+						MessageOut msgOut = MessageOut.Parse(buf);
+						if (msgOut != null)
 						{
-							MessageManager.Completed(msgOut);
+							if (msgOut.Mode == MessageMode.Result)
+							{
+								MessageManager.Completed(msgOut);
+							}
+							else if (msgOut.Mode == MessageMode.Callback)
+							{
+								CallbackManager.Callback(msgOut);
+							}
 						}
-						else if (msgOut.Mode == MessageMode.Callback)
+					}
+					catch (Exception ex)
+					{
+						var errorService = ServiceManager.Resolve<IErrorService>();
+						if(errorService != null)
 						{
-							
+							errorService.OnError(ex);
 						}
 					}
 				});
@@ -44,43 +57,43 @@ namespace CarmackFX.Client.Connection
 				// 绑定端口
 				client.Connect(this.Config.Host, this.Config.Port);
 
-		        while (true)
-		        {
-			        if (client != null && client.IsOpen())
-			        {
-				        client.Update();
-			        }
+				while (true)
+				{
+					if (client != null && client.IsOpen())
+					{
+						client.Update();
+					}
 
-			        System.Threading.Thread.Sleep(10);
-		        }
+					System.Threading.Thread.Sleep(10);
+				}
 			}));
-        }
+		}
 
-        public void Disconnect()
-        {
-	        try
-	        {
-		        client.Close();
+		public void Disconnect()
+		{
+			try
+			{
+				client.Close();
 			}
 			catch (Exception e)
-	        {
-	        }
+			{
+			}
 
-	        client = null;
-        }
+			client = null;
+		}
 
-	    public void Send(MessageIn msgIn)
-	    {
-		    try
-		    {
-			    if (client != null && client.IsOpen())
-			    {
-				    client.Send(msgIn.Build());
-			    }
-		    }
+		public void Send(MessageIn msgIn)
+		{
+			try
+			{
+				if (client != null && client.IsOpen())
+				{
+					client.Send(msgIn.Build());
+				}
+			}
 			catch (Exception e)
-		    {
-		    }
-	    }
+			{
+			}
+		}
 	}
 }

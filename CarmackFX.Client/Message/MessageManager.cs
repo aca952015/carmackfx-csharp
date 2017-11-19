@@ -50,7 +50,7 @@ namespace CarmackFX.Client.Message
 						{
 							queue.Remove(msgIn.Id);
 
-							if (queyeItem.Result.Success == MessageSuccess.SUCCESS)
+							if (queyeItem.Result.Success == MessageSuccess.Success)
 							{
 								return new ServiceResponse()
 								{
@@ -58,11 +58,11 @@ namespace CarmackFX.Client.Message
 									Data = queyeItem.Result.Data
 								};
 							}
-							else if (queyeItem.Result.Success == MessageSuccess.SERVERERROR)
+							else if (queyeItem.Result.Success == MessageSuccess.SeverError)
 							{
 								throw new MessageException(ExceptionCode.ServerError);
 							}
-							else if (queyeItem.Result.Success == MessageSuccess.DATAINVALID)
+							else if (queyeItem.Result.Success == MessageSuccess.DataInvalid)
 							{
 								throw new MessageException(ExceptionCode.DataInvalid);
 							}
@@ -90,7 +90,7 @@ namespace CarmackFX.Client.Message
 			return task;
 		}
 
-		public static void Completed(MessageOut msgOut)
+		internal static void Completed(MessageOut msgOut)
 		{
 			if (queue.ContainsKey(msgOut.Id))
 			{
@@ -98,5 +98,6 @@ namespace CarmackFX.Client.Message
 				queue.Remove(msgOut.Id);
 			}
 		}
+
 	}
 }

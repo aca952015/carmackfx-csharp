@@ -29,11 +29,11 @@
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.button1 = new System.Windows.Forms.Button();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.msgBox = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.SuspendLayout();
@@ -48,26 +48,14 @@
 			this.panel1.Size = new System.Drawing.Size(840, 123);
 			this.panel1.TabIndex = 1;
 			// 
-			// listBox1
+			// textBox2
 			// 
-			this.listBox1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.ItemHeight = 12;
-			this.listBox1.Location = new System.Drawing.Point(685, 8);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(163, 462);
-			this.listBox1.TabIndex = 2;
-			// 
-			// textBox1
-			// 
-			this.textBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox1.Location = new System.Drawing.Point(8, 8);
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(677, 462);
-			this.textBox1.TabIndex = 3;
+			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBox2.Location = new System.Drawing.Point(0, 0);
+			this.textBox2.Multiline = true;
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(677, 123);
+			this.textBox2.TabIndex = 1;
 			// 
 			// panel2
 			// 
@@ -89,21 +77,33 @@
 			this.button1.Text = "Send";
 			this.button1.UseVisualStyleBackColor = true;
 			// 
-			// textBox2
+			// listBox1
 			// 
-			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox2.Location = new System.Drawing.Point(0, 0);
-			this.textBox2.Multiline = true;
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(677, 123);
-			this.textBox2.TabIndex = 1;
+			this.listBox1.Dock = System.Windows.Forms.DockStyle.Right;
+			this.listBox1.FormattingEnabled = true;
+			this.listBox1.ItemHeight = 12;
+			this.listBox1.Location = new System.Drawing.Point(685, 8);
+			this.listBox1.Name = "listBox1";
+			this.listBox1.Size = new System.Drawing.Size(163, 462);
+			this.listBox1.TabIndex = 2;
+			// 
+			// msgBox
+			// 
+			this.msgBox.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.msgBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.msgBox.Location = new System.Drawing.Point(8, 8);
+			this.msgBox.Multiline = true;
+			this.msgBox.Name = "msgBox";
+			this.msgBox.ReadOnly = true;
+			this.msgBox.Size = new System.Drawing.Size(677, 462);
+			this.msgBox.TabIndex = 3;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(856, 601);
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.msgBox);
 			this.Controls.Add(this.listBox1);
 			this.Controls.Add(this.panel1);
 			this.Name = "MainForm";
@@ -126,7 +126,7 @@
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.ListBox listBox1;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox msgBox;
 	}
 }
 

@@ -2,8 +2,8 @@
 {
 	public enum MessageSuccess
 	{
-		SUCCESS = 0,
-		SERVERERROR = 1,
-		DATAINVALID = 2
+		Success = 0,
+		SeverError = 1,
+		DataInvalid = 2
 	}
 }

@@ -11,10 +11,12 @@ using CarmackFX.Client;
 using CarmackFX.Client.Security;
 using CarmackFX.Client.Connection;
 using CarmackFX.Client.Protocol;
+using CarmackFX.Client.Error;
 
 namespace CarmackFX.ChatRoom
 {
-	public partial class MainForm : Form
+	[Service(ServiceType.Client)]
+	public partial class MainForm : Form, IErrorService
 	{
 		private static string username = "游客" + new Random().Next(100);
 
@@ -26,7 +28,8 @@ namespace CarmackFX.ChatRoom
 		private void MainForm_Load(object sender, EventArgs e)
 		{
 			ServiceManager.Register<RoomService>();
-			ServiceManager.Register(new ClientService());
+			ServiceManager.Register<IErrorService>(this);
+			ServiceManager.Register("ClientCallback", this);
 
 			var connection = ServiceManager.Resolve<IConnectionService>();
 			connection.Config.Host = "app.crossgay.club";
@@ -48,5 +51,15 @@ namespace CarmackFX.ChatRoom
 				
 			});
         }
+
+		public void Broadcast(string content)
+		{
+			msgBox.AppendText(content + "\r\n");
+		}
+
+		public void OnError(Exception ex)
+		{
+			
+		}
 	}
 }

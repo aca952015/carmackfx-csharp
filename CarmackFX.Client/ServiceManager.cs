@@ -12,9 +12,9 @@ namespace CarmackFX.Client
 {
     public static class ServiceManager
     {
-        private static readonly Dictionary<Type, ServiceInstance> instances = new Dictionary<Type, ServiceInstance>();
+        private static readonly Dictionary<string, ServiceInstance> instances = new Dictionary<string, ServiceInstance>();
 
-        static ServiceManager()
+		static ServiceManager()
         {
             Register<IConnectionService>(new ConnectionService());
             Register<IProtocolService>(new ProtocolService());
@@ -32,7 +32,7 @@ namespace CarmackFX.Client
 				Instance = instance
 	        };
 
-	        instances.Add(type, si);
+	        instances.Add(type.FullName, si);
         }
 
         public static void Register<T>()
@@ -51,20 +51,38 @@ namespace CarmackFX.Client
                 si.Instance = instance;
             }
 
-            instances.Add(type, si);
+            instances.Add(type.FullName, si);
         }
+
+		public static void Register(String name, object instance)
+		{
+			var si = new ServiceInstance
+			{
+				ServiceType = GetServiceType(instance.GetType()),
+				Instance = instance,
+			};
+
+			instances.Add(name, si);
+		}
 
         public static T Resolve<T>()
         {
-            if(instances.ContainsKey(typeof(T)))
-            {
-                return (T)instances[typeof(T)].Instance;
-            }
+			string name = typeof(T).FullName;
 
-            return default(T);
+			return (T)Resolve(name);
         }
 
-        private static ServiceType GetServiceType(Type type)
+		public static object Resolve(string name)
+		{
+			if (instances.ContainsKey(name))
+			{
+				return instances[name].Instance;
+			}
+
+			return null;
+		}
+
+		private static ServiceType GetServiceType(Type type)
         {
             var atts = type.GetCustomAttributes(typeof(ServiceAttribute), true);
             if(atts.Length != 0)
