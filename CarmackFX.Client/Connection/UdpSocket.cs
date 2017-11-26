@@ -31,6 +31,8 @@ namespace CarmackFX.Client.Connection
 
 		public void Connect(string host, UInt16 port)
 		{
+			this.Close();
+
 			mSvrEndPoint = new IPEndPoint(IPAddress.Parse(GetIPAddress(host)), port);
 			mUdpClient = new UdpClient(host, port);
 			mUdpClient.Connect(mSvrEndPoint);
@@ -114,7 +116,7 @@ namespace CarmackFX.Client.Connection
 
 		public bool IsOpen()
 		{
-			return mUdpClient != null;
+			return mUdpClient != null && mUdpClient.Client.Connected;
 		}
 
 		void process_recv_queue()

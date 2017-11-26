@@ -98,8 +98,13 @@ namespace CarmackFX.Client.Connection
 		{
 			try
 			{
-				if (client != null && client.IsOpen())
+				if (client != null)
 				{
+					if(!client.IsOpen())
+					{
+						this.Connect();
+					}
+
 					client.Send(msgIn.Build());
 				}
 			}
