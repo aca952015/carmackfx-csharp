@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarmackFX.Client
 {
-    public enum ServiceType
-    {
-        Connection,
-        Protocol,
-        Server,
+	public enum ServiceType
+	{
+		Internal,
+		Server,
 		Client
-    }
+	}
 }

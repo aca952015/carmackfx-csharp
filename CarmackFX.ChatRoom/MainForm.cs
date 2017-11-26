@@ -19,6 +19,7 @@ namespace CarmackFX.ChatRoom
 	public partial class MainForm : Form, IErrorService
 	{
 		private static string username = "游客" + new Random().Next(100);
+		private IServiceManager serviceManager;
 		private RoomService roomService;
 
 		public MainForm()
@@ -33,30 +34,32 @@ namespace CarmackFX.ChatRoom
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			ServiceManager.Register<IErrorService>(this);
-			ServiceManager.Register("ClientCallback", this);
-			roomService = ServiceManager.Register<RoomService>();
+			serviceManager = ServiceManagerFactory.CreateInstance();
 
-			var connection = ServiceManager.Resolve<IConnectionService>();
+			serviceManager.Register<IErrorService>(this);
+			serviceManager.Register("ClientCallback", this);
+			roomService = serviceManager.Register<RoomService>();
+
+			var connection = serviceManager.Resolve<IConnectionService>();
 			connection.Config.Host = "app.crossgay.club";
 			connection.Config.Port = 18000;
 			connection.Connect();
 
-            var authTask = ServiceManager.Resolve<ISecurityService>()
-                .Auth(new AuthIn() { UserName = username, Password = "123456" });
+			var authTask = serviceManager.Resolve<ISecurityService>()
+				.Auth(new AuthIn() { UserName = username, Password = "123456" });
 
-            authTask.Start();
-            authTask.ContinueWith(JoinRoom);
+			authTask.Start();
+			authTask.ContinueWith(JoinRoom);
 
 		}
 
-        private void JoinRoom(Task<AuthResult> task)
-        {
+		private void JoinRoom(Task<AuthResult> task)
+		{
 			roomService.Join().ContinueWith((joinTask) => 
 			{
 				roomService.Chat("大家好");
 			});
-        }
+		}
 
 		public void UserJoin(String username)
 		{

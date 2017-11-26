@@ -9,22 +9,24 @@ using CarmackFX.Client.Security;
 
 namespace CarmackFX.Example
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var connection = ServiceManager.Resolve<IConnectionService>();
-            connection.Config.Host = "app.crossgay.club";
-            connection.Config.Port = 18000;
-            connection.Connect();
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			IServiceManager sm = ServiceManagerFactory.CreateInstance();
 
-            var authService = ServiceManager.Resolve<ISecurityService>();
-            var authIn = new AuthIn() { UserName = "ACA", Password = "123456" };
-            var authTask = authService.Auth(authIn);
-	        var authResult = authTask.ConfigureAwait(true).GetAwaiter().GetResult();
+			var connection = sm.Resolve<IConnectionService>();
+			connection.Config.Host = "app.crossgay.club";
+			connection.Config.Port = 18000;
+			connection.Connect();
 
-            var protocolService = ServiceManager.Resolve<IProtocolService>();
-            protocolService.Config.Token = authResult.Token;
-        }
-    }
+			var authService = sm.Resolve<ISecurityService>();
+			var authIn = new AuthIn() { UserName = "ACA", Password = "123456" };
+			var authTask = authService.Auth(authIn);
+			var authResult = authTask.ConfigureAwait(true).GetAwaiter().GetResult();
+
+			var protocolService = sm.Resolve<IProtocolService>();
+			protocolService.Config.Token = authResult.Token;
+		}
+	}
 }

@@ -1,65 +1,57 @@
-﻿using CarmackFX.Client.Security;
-using CarmackFX.Client.Connection;
-using CarmackFX.Client.Protocol;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CarmackFX.Client.Proxy;
 using CarmackFX.Client.Error;
 
 namespace CarmackFX.Client
 {
-    public static class ServiceManager
-    {
-        private static readonly Dictionary<string, ServiceInstance> instances = new Dictionary<string, ServiceInstance>();
+	class ServiceManager : IServiceManager
+	{
+		private Dictionary<string, ServiceInstance> instances;
 
-		static ServiceManager()
-        {
-            Register<IConnectionService>(new ConnectionService());
-            Register<IProtocolService>(new ProtocolService());
-			Register<ISecurityService>(new SecurityService());
-        }
+		public ServiceManager()
+		{
+			instances = new Dictionary<string, ServiceInstance>();
+		}
 
-        public static T Register<T>(T instance)
+		public T Register<T>(T instance)
 			where T : class
-        {
-	        var type = typeof(T);
+		{
+			var type = typeof(T);
 
-	        var si = new ServiceInstance
-	        {
-		        ServiceType = GetServiceType(type),
+			var si = new ServiceInstance
+			{
+				ServiceType = GetServiceType(type),
 				Instance = instance
-	        };
+			};
 
-	        instances.Add(type.FullName, si);
+			instances.Add(type.FullName, si);
 
 			return instance;
-        }
+		}
 
-        public static T Register<T>()
-            where T : class
-        {
-            Type type = typeof(T);
-	        var si = new ServiceInstance
-	        {
-		        ServiceType = GetServiceType(type)
-	        };
+		public T Register<T>()
+			where T : class
+		{
+			Type type = typeof(T);
+			var si = new ServiceInstance
+			{
+				ServiceType = GetServiceType(type)
+			};
 
-	        if(si.ServiceType == ServiceType.Server)
-            {
-                Object instance = new ServerProxy(type).GetTransparentProxy();
+			if (si.ServiceType == ServiceType.Server)
+			{
+				Object instance = new ServerProxy(type, this).GetTransparentProxy();
 
-                si.Instance = instance;
-            }
+				si.Instance = instance;
+			}
 
-            instances.Add(type.FullName, si);
+			instances.Add(type.FullName, si);
 
 			return (T)si.Instance;
-        }
+		}
 
-		public static object Register(String name, object instance)
+		public object Register(String name, object instance)
 		{
 			var si = new ServiceInstance
 			{
@@ -72,14 +64,14 @@ namespace CarmackFX.Client
 			return instance;
 		}
 
-        public static T Resolve<T>()
-        {
+		public T Resolve<T>()
+		{
 			string name = typeof(T).FullName;
 
 			return (T)Resolve(name);
-        }
+		}
 
-		public static object Resolve(string name)
+		public object Resolve(string name)
 		{
 			if (instances.ContainsKey(name))
 			{
@@ -89,22 +81,22 @@ namespace CarmackFX.Client
 			return null;
 		}
 
-		private static ServiceType GetServiceType(Type type)
-        {
-            var atts = type.GetCustomAttributes(typeof(ServiceAttribute), true);
-            if(atts.Length != 0)
-            {
-                return (atts[0] as ServiceAttribute).ServiceType;
-            }
+		private ServiceType GetServiceType(Type type)
+		{
+			var atts = type.GetCustomAttributes(typeof(ServiceAttribute), true);
+			if (atts.Length != 0)
+			{
+				return (atts[0] as ServiceAttribute).ServiceType;
+			}
 
-            return ServiceType.Server;
-        }
+			return ServiceType.Server;
+		}
 
-		internal static void OnError(Exception ex)
+		public void OnError(Exception ex)
 		{
 			try
 			{
-				var errorService = ServiceManager.Resolve<IErrorService>();
+				var errorService = this.Resolve<IErrorService>();
 				if (errorService != null)
 				{
 					errorService.OnError(ex);

@@ -46,13 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Callback\CallbackData.cs" />
-    <Compile Include="Callback\CallbackManager.cs" />
+    <Compile Include="Callback\CallbackService.cs" />
+    <Compile Include="Callback\ICallbackService.cs" />
     <Compile Include="Connection\KCP.cs" />
     <Compile Include="Connection\SwitchQueue.cs" />
     <Compile Include="Connection\UdpSocket.cs" />
     <Compile Include="Error\ErrorService.cs" />
     <Compile Include="Error\MethodArgsNotMatchException.cs" />
     <Compile Include="Error\MethodNotFoundException.cs" />
+    <Compile Include="IServiceManager.cs" />
+    <Compile Include="Message\IMessageService.cs" />
     <Compile Include="Message\MessageAttribute.cs" />
     <Compile Include="Message\MessageMode.cs" />
     <Compile Include="Proxy\RpcMessageArgument.cs" />
@@ -65,16 +68,18 @@
     <Compile Include="Message\ByteBuf.cs" />
     <Compile Include="Message\ExceptionCode.cs" />
     <Compile Include="Message\MessageException.cs" />
-    <Compile Include="Message\MessageManager.cs" />
+    <Compile Include="Message\MessageService.cs" />
     <Compile Include="Message\MessageQueueItem.cs" />
     <Compile Include="Message\MessageSuccess.cs" />
     <Compile Include="Protocol\IProtocolService.cs" />
     <Compile Include="Protocol\ProtocolConfig.cs" />
     <Compile Include="Protocol\ProtocolService.cs" />
+    <Compile Include="ServiceBase.cs" />
     <Compile Include="ServiceManager.cs" />
     <Compile Include="Security\ISecurityService.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
     <Compile Include="ServiceInstance.cs" />
+    <Compile Include="ServiceManagerFactory.cs" />
     <Compile Include="ServiceResponse.cs" />
     <Compile Include="ServiceTask.cs" />
     <Compile Include="ServiceType.cs" />

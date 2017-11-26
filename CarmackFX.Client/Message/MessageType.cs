@@ -5,6 +5,6 @@ namespace CarmackFX.Client.Message
 		Heartbeat = 0,
 		Security = 1,
 		Internal = 2,
-        Public = 3
+		Public = 3
 	}
 }

@@ -7,14 +7,20 @@ using Newtonsoft.Json;
 
 namespace CarmackFX.Client.Message
 {
-	class MessageManager
+	class MessageService : IMessageService
 	{
-		public static readonly Dictionary<long, MessageQueueItem> queue = new Dictionary<long, MessageQueueItem>();
-		private static long meesageSeed = 0;
+		public readonly Dictionary<long, MessageQueueItem> queue = new Dictionary<long, MessageQueueItem>();
+		private long meesageSeed = 0;
+		private ServiceManager serviceManager;
 
-		public static Task<ServiceResponse> Push(MessageType messageType, object messageData)
+		public MessageService(ServiceManager serviceManager)
 		{
-			IProtocolService protocolService = ServiceManager.Resolve<IProtocolService>();
+			this.serviceManager = serviceManager;
+		}
+
+		public Task<ServiceResponse> Push(MessageType messageType, object messageData)
+		{
+			IProtocolService protocolService = serviceManager.Resolve<IProtocolService>();
 
 			MessageIn msgIn = new MessageIn()
 			{
@@ -33,7 +39,7 @@ namespace CarmackFX.Client.Message
 
 			ServiceTask task = new ServiceTask(() =>
 			{
-				IConnectionService service = ServiceManager.Resolve<IConnectionService>();
+				IConnectionService service = serviceManager.Resolve<IConnectionService>();
 				service.Send(msgIn);
 
 				try
@@ -90,7 +96,7 @@ namespace CarmackFX.Client.Message
 			return task;
 		}
 
-		internal static void Completed(MessageOut msgOut)
+		public void Completed(MessageOut msgOut)
 		{
 			if (queue.ContainsKey(msgOut.Id))
 			{

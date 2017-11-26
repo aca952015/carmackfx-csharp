@@ -3,16 +3,18 @@ using CarmackFX.Client.Message;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarmackFX.Client.Callback
 {
-	static class CallbackManager
+	class CallbackService : ServiceBase, ICallbackService
 	{
-		internal static void Callback(MessageOut msgOut)
+		public CallbackService(ServiceManager serviceManager)
+			: base(serviceManager)
+		{
+		}
+
+		public void Callback(MessageOut msgOut)
 		{
 			var data = JsonConvert.DeserializeObject<CallbackData>(msgOut.Data);
 			var service = ServiceManager.Resolve(data.ServiceName);

@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CarmackFX.Client.Message;
-using CarmackFX.Client.Protocol;
 using CarmackFX.Client.Callback;
-using CarmackFX.Client.Error;
 
 namespace CarmackFX.Client.Connection
 {
-	class ConnectionService : IConnectionService
+	class ConnectionService : ServiceBase, IConnectionService
 	{
 		private UdpSocket client = null;
 
@@ -18,8 +13,8 @@ namespace CarmackFX.Client.Connection
 
 		private DateTime lastHeartbeat;
 
-
-		public ConnectionService()
+		public ConnectionService(ServiceManager serviceManager)
+			: base(serviceManager)
 		{
 			this.Config = new ConnectionConfig();
 		}
@@ -38,11 +33,11 @@ namespace CarmackFX.Client.Connection
 						{
 							if (msgOut.Mode == MessageMode.Result)
 							{
-								MessageManager.Completed(msgOut);
+								ServiceManager.Resolve<IMessageService>().Completed(msgOut);
 							}
 							else if (msgOut.Mode == MessageMode.Callback)
 							{
-								CallbackManager.Callback(msgOut);
+								ServiceManager.Resolve<ICallbackService>().Callback(msgOut);
 							}
 						}
 					}
