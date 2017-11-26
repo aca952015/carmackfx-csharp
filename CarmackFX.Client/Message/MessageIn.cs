@@ -17,7 +17,7 @@ namespace CarmackFX.Client.Message
 		{
 		}
 
-		public byte[] Build()
+		internal byte[] Build()
 		{
 			byte[] content = Data == null ? null : Encoding.UTF8.GetBytes(this.Data);
 			byte[] data = new byte[(content?.Length ?? 0) + offset];

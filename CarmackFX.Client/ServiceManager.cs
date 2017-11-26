@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CarmackFX.Client.Proxy;
 using CarmackFX.Client.Error;
+using CarmackFX.Client.Debug;
 
 namespace CarmackFX.Client
 {
@@ -92,14 +93,14 @@ namespace CarmackFX.Client
 			return ServiceType.Server;
 		}
 
-		public void OnError(Exception ex)
+		public void Error(Exception ex)
 		{
 			try
 			{
-				var errorService = this.Resolve<IErrorService>();
-				if (errorService != null)
+				var service = this.Resolve<IErrorService>();
+				if (service != null)
 				{
-					errorService.OnError(ex);
+					service.OnError(ex);
 				}
 				else
 				{
@@ -108,8 +109,21 @@ namespace CarmackFX.Client
 			}
 			catch (Exception nex)
 			{
-				Console.WriteLine(ex.ToString());
+				if (ex != null)
+				{
+					Console.WriteLine(ex.ToString());
+				}
+
 				Console.WriteLine(nex.ToString());
+			}
+		}
+
+		public void Log(string message)
+		{
+			var service = this.Resolve<IDebugService>();
+			if (service != null)
+			{
+				service.WriteLog(message);
 			}
 		}
 	}

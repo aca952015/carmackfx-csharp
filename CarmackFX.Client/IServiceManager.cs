@@ -9,6 +9,7 @@ namespace CarmackFX.Client
 		T Register<T>(T instance) where T : class;
 		object Resolve(string name);
 		T Resolve<T>();
-		void OnError(Exception ex);
+		void Error(Exception ex);
+		void Log(string message);
 	}
 }

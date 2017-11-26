@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 
 namespace CarmackFX.Client.Message
@@ -23,10 +24,7 @@ namespace CarmackFX.Client.Message
 				msgOut.Mode = (MessageMode)bb.ReadByte();
 				msgOut.Success = (MessageSuccess)bb.ReadByte();
 				msgOut.Token = bb.ReadLong();
-				if (msgOut.Success == MessageSuccess.Success)
-				{
-					msgOut.Data = bb.ReadString();
-				}
+				msgOut.Data = bb.ReadString();
 
 				return msgOut;
 			}
@@ -34,6 +32,11 @@ namespace CarmackFX.Client.Message
 			{
 				return null;
 			}
+		}
+
+		public string ToJson()
+		{
+			return JsonConvert.SerializeObject(this);
 		}
 	}
 }

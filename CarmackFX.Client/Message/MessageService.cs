@@ -7,20 +7,19 @@ using Newtonsoft.Json;
 
 namespace CarmackFX.Client.Message
 {
-	class MessageService : IMessageService
+	class MessageService : ServiceBase, IMessageService
 	{
 		public readonly Dictionary<long, MessageQueueItem> queue = new Dictionary<long, MessageQueueItem>();
 		private long meesageSeed = 0;
-		private ServiceManager serviceManager;
 
 		public MessageService(ServiceManager serviceManager)
+			: base(serviceManager)
 		{
-			this.serviceManager = serviceManager;
 		}
 
 		public Task<ServiceResponse> Push(MessageType messageType, object messageData)
 		{
-			IProtocolService protocolService = serviceManager.Resolve<IProtocolService>();
+			IProtocolService protocolService = ServiceManager.Resolve<IProtocolService>();
 
 			MessageIn msgIn = new MessageIn()
 			{
@@ -30,16 +29,16 @@ namespace CarmackFX.Client.Message
 				Data = JsonConvert.SerializeObject(messageData)
 			};
 
-			MessageQueueItem queyeItem = new MessageQueueItem()
+			MessageQueueItem queueItem = new MessageQueueItem()
 			{
 				Id = msgIn.Id
 			};
 
-			queue.Add(msgIn.Id, queyeItem);
+			queue.Add(msgIn.Id, queueItem);
 
 			ServiceTask task = new ServiceTask(() =>
 			{
-				IConnectionService service = serviceManager.Resolve<IConnectionService>();
+				IConnectionService service = ServiceManager.Resolve<IConnectionService>();
 				service.Send(msgIn);
 
 				try
@@ -52,25 +51,37 @@ namespace CarmackFX.Client.Message
 							break;
 						}
 
-						if (queyeItem.Result != null)
+						if (queueItem.Result != null)
 						{
 							queue.Remove(msgIn.Id);
 
-							if (queyeItem.Result.Success == MessageSuccess.Success)
+							if (queueItem.Result.Success == MessageSuccess.Success)
 							{
 								return new ServiceResponse()
 								{
 									IsSuccess = true,
-									Data = queyeItem.Result.Data
+									Data = queueItem.Result.Data
 								};
 							}
-							else if (queyeItem.Result.Success == MessageSuccess.SeverError)
+							else
 							{
-								throw new MessageException(ExceptionCode.ServerError);
-							}
-							else if (queyeItem.Result.Success == MessageSuccess.DataInvalid)
-							{
-								throw new MessageException(ExceptionCode.DataInvalid);
+								var data = JsonConvert.DeserializeObject<MessageError>(queueItem.Result.Data);
+								ExceptionCode code = ExceptionCode.Unknown;
+
+								if (queueItem.Result.Success == MessageSuccess.SeverError)
+								{
+									code = ExceptionCode.ServerError;
+								}
+								else if (queueItem.Result.Success == MessageSuccess.DataInvalid)
+								{
+									code = ExceptionCode.DataInvalid;
+								}
+
+								return new ServiceResponse()
+								{
+									IsSuccess = false,
+									Error = new MessageException(code, data.ErrorMessage ?? code.ToString())
+								};
 							}
 						}
 
@@ -98,6 +109,8 @@ namespace CarmackFX.Client.Message
 
 		public void Completed(MessageOut msgOut)
 		{
+			ServiceManager.Log(msgOut.ToJson());
+
 			if (queue.ContainsKey(msgOut.Id))
 			{
 				queue[msgOut.Id].Result = msgOut;

@@ -7,7 +7,7 @@ namespace CarmackFX.Client.Connection
 {
 	class ConnectionService : ServiceBase, IConnectionService
 	{
-		private UdpSocket client = null;
+		private ConnectClient client = null;
 
 		public ConnectionConfig Config { get; private set; }
 
@@ -24,11 +24,14 @@ namespace CarmackFX.Client.Connection
 			Task.Run(new Action(() =>
 			{
 				// 创建一个实例
-				client = new UdpSocket((byte[] buf) =>
+				client = new ConnectClient(this.Config);
+				client.Received += (sender, ByteBuf) =>
 				{
+					this.ServiceManager.Log("recevie data from server: " + ByteBuf.Length);
+
 					try
 					{
-						MessageOut msgOut = MessageOut.Parse(buf);
+						MessageOut msgOut = MessageOut.Parse(ByteBuf);
 						if (msgOut != null)
 						{
 							if (msgOut.Mode == MessageMode.Result)
@@ -43,22 +46,27 @@ namespace CarmackFX.Client.Connection
 					}
 					catch (Exception ex)
 					{
-						ServiceManager.OnError(ex);
+						ServiceManager.Error(ex);
 					}
-				});
-
-				// 绑定端口
-				client.Connect(this.Config.Host, this.Config.Port);
+				};
 
 				lastHeartbeat = DateTime.Now;
 
 				while (true)
 				{
-					if (client != null && client.IsOpen())
+					if (client != null)
 					{
-						client.Update();
+						if(!client.IsRunning())
+						{
+							client.Connect();
+							client.Start();
+						}
 
 						SendHeartbeat();
+					}
+					else
+					{
+						break;
 					}
 
 					System.Threading.Thread.Sleep(10);
@@ -85,7 +93,7 @@ namespace CarmackFX.Client.Connection
 		{
 			try
 			{
-				client.Close();
+				client.Stop();
 			}
 			catch (Exception e)
 			{
@@ -100,9 +108,10 @@ namespace CarmackFX.Client.Connection
 			{
 				if (client != null)
 				{
-					if(!client.IsOpen())
+					if(!client.IsRunning())
 					{
-						this.Connect();
+						client.Connect();
+						client.Start();
 					}
 
 					client.Send(msgIn.Build());
@@ -110,7 +119,7 @@ namespace CarmackFX.Client.Connection
 			}
 			catch (Exception ex)
 			{
-				ServiceManager.OnError(ex);
+				ServiceManager.Error(ex);
 			}
 		}
 	}

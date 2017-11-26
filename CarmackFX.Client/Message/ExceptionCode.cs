@@ -4,6 +4,7 @@
 	{
 		Timeout,
 		ServerError,
-		DataInvalid
+		DataInvalid,
+		Unknown
 	}
 }
