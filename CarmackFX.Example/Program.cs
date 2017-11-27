@@ -25,8 +25,7 @@ namespace CarmackFX.Example
 			var authTask = authService.Auth(authIn);
 			var authResult = authTask.ConfigureAwait(true).GetAwaiter().GetResult();
 
-			var protocolService = sm.Resolve<IProtocolService>();
-			protocolService.Config.Token = authResult.Token;
+			Console.WriteLine(authResult.User.Username);
 		}
 	}
 }

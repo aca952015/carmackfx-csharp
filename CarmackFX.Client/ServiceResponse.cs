@@ -7,6 +7,7 @@ namespace CarmackFX.Client
 	{
 		public bool IsSuccess { get; set; }
 		public String Data { get; set; }
+		public long Token { get; set; }
 		public Exception Error { get; set; }
 
 		public T Get<T>()

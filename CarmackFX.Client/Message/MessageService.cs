@@ -60,6 +60,7 @@ namespace CarmackFX.Client.Message
 								return new ServiceResponse()
 								{
 									IsSuccess = true,
+									Token = queueItem.Result.Token,
 									Data = queueItem.Result.Data
 								};
 							}
@@ -80,6 +81,7 @@ namespace CarmackFX.Client.Message
 								return new ServiceResponse()
 								{
 									IsSuccess = false,
+									Token = queueItem.Result.Token,
 									Error = new MessageException(code, data.ErrorMessage ?? code.ToString())
 								};
 							}

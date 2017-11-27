@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using CarmackFX.Client.Domain;
+using System.Threading.Tasks;
 
 namespace CarmackFX.Client.Security
 {

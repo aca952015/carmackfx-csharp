@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CarmackFX.Client.Message;
 using CarmackFX.Client.Protocol;
+using CarmackFX.Client.Domain;
 
 namespace CarmackFX.Client.Security
 {
@@ -20,10 +21,12 @@ namespace CarmackFX.Client.Security
 				if(response != null && response.IsSuccess)
 				{
 					AuthResult result = response.Get<AuthResult>();
-					if (result != null && result.Token > 0)
+					if (result != null && result.Success)
 					{
 						IProtocolService protocol = ServiceManager.Resolve<IProtocolService>();
-						protocol.Config.Token = result.Token;
+						protocol.Config.Token = response.Token;
+
+						return result;
 					}
 				}
 
