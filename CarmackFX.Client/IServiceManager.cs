@@ -11,5 +11,6 @@ namespace CarmackFX.Client
 		T Resolve<T>();
 		void Error(Exception ex);
 		void Log(string message);
+		void Release();
 	}
 }

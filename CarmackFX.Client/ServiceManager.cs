@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CarmackFX.Client.Proxy;
 using CarmackFX.Client.Error;
 using CarmackFX.Client.Debug;
+using CarmackFX.Client.Connection;
 
 namespace CarmackFX.Client
 {
@@ -124,6 +125,15 @@ namespace CarmackFX.Client
 			if (service != null)
 			{
 				service.WriteLog(message);
+			}
+		}
+
+		public void Release()
+		{
+			var service = this.Resolve<IConnectionService>();
+			if(service != null)
+			{
+				service.Disconnect();
 			}
 		}
 	}

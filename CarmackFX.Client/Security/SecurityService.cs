@@ -13,25 +13,38 @@ namespace CarmackFX.Client.Security
 
 		}
 
-		public Task<AuthResult> Auth<T>(T authIn)
+		public ServiceTask Auth<T>(T authIn)
 		{
-			return new Task<AuthResult>(() =>
+			var task = new ServiceTask(() =>
 			{
 				ServiceResponse response = ServiceManager.Resolve<IMessageService>().Push(MessageType.Security, authIn).ConfigureAwait(true).GetAwaiter().GetResult();
-				if(response != null && response.IsSuccess)
+				if(response != null)
 				{
-					AuthResult result = response.Get<AuthResult>();
-					if (result != null && result.Success)
+					if (response.IsSuccess)
 					{
-						IProtocolService protocol = ServiceManager.Resolve<IProtocolService>();
-						protocol.Config.Token = response.Token;
+						AuthResult result = response.Get<AuthResult>();
+						if (result != null && result.Success)
+						{
+							IProtocolService protocol = ServiceManager.Resolve<IProtocolService>();
+							protocol.Config.Token = response.Token;
 
-						return result;
+							return response;
+						}
 					}
+
+					return response;
 				}
 
-				return null;
+				return new ServiceResponse()
+				{
+					IsSuccess = false,
+					Error = new System.Exception()
+				};
 			});
+
+			task.Start();
+
+			return task;
 		}
 	}
 }

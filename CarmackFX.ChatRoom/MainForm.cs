@@ -12,6 +12,7 @@ using CarmackFX.Client.Security;
 using CarmackFX.Client.Connection;
 using CarmackFX.Client.Protocol;
 using CarmackFX.Client.Error;
+using CarmackFX.Client.Domain;
 
 namespace CarmackFX.ChatRoom
 {
@@ -48,12 +49,10 @@ namespace CarmackFX.ChatRoom
 			var authTask = serviceManager.Resolve<ISecurityService>()
 				.Auth(new AuthIn() { UserName = username, Password = "123456" });
 
-			authTask.Start();
 			authTask.ContinueWith(JoinRoom);
-
 		}
 
-		private void JoinRoom(Task<AuthResult> task)
+		private void JoinRoom(Task<ServiceResponse> task)
 		{
 			roomService.Join().ContinueWith((joinTask) => 
 			{
