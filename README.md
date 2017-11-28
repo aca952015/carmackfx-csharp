@@ -1,9 +1,5 @@
-# kcp-csharp
-KCP - A Fast and Reliable ARQ Protocol
+# carmackfx-csharp
+CarmackFx client framework for csharp.
 
 ref:  
-c: skywind3000 [KCP](https://github.com/skywind3000/kcp)  
-go: xtaci [kcp-go](https://github.com/xtaci/kcp-go)  
-
-
-
+CarmackFX https://github.com/aca952015/carmackfx
