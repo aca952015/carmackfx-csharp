@@ -4,6 +4,7 @@ using CarmackFX.Client.Proxy;
 using CarmackFX.Client.Error;
 using CarmackFX.Client.Debug;
 using CarmackFX.Client.Connection;
+using CarmackFX.Client.Protocol;
 
 namespace CarmackFX.Client
 {
@@ -92,6 +93,11 @@ namespace CarmackFX.Client
 			}
 
 			return ServiceType.Server;
+		}
+
+		public long GetToken()
+		{
+			return Resolve<IProtocolService>().Config.Token;
 		}
 
 		public void Error(Exception ex)
