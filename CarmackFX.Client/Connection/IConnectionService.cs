@@ -6,7 +6,7 @@ namespace CarmackFX.Client.Connection
 	public interface IConnectionService
 	{
 		ConnectionConfig Config { get; }
-		void Connect();
+		bool Connect();
 		void Disconnect();
 		void Send(MessageIn msgIn);
 	}

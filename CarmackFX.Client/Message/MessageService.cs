@@ -111,8 +111,6 @@ namespace CarmackFX.Client.Message
 
 		public void Completed(MessageOut msgOut)
 		{
-			ServiceManager.Log(msgOut.ToJson());
-
 			if (queue.ContainsKey(msgOut.Id))
 			{
 				queue[msgOut.Id].Result = msgOut;
@@ -120,5 +118,9 @@ namespace CarmackFX.Client.Message
 			}
 		}
 
+		public void Clear()
+		{
+			queue.Clear();
+		}
 	}
 }

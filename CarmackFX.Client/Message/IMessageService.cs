@@ -7,5 +7,6 @@ namespace CarmackFX.Client.Message
 	{
 		Task<ServiceResponse> Push(MessageType messageType, object messageData);
 		void Completed(MessageOut msgOut);
+		void Clear();
 	}
 }

@@ -56,7 +56,6 @@
     <Compile Include="Connection\Kcp\Output.cs" />
     <Compile Include="Connection\SwitchQueue.cs" />
     <Compile Include="Debug\IDebugService.cs" />
-    <Compile Include="Domain\User.cs" />
     <Compile Include="Error\ErrorService.cs" />
     <Compile Include="Error\MethodArgsNotMatchException.cs" />
     <Compile Include="Error\MethodNotFoundException.cs" />
@@ -69,7 +68,7 @@
     <Compile Include="Proxy\RpcMessageArgument.cs" />
     <Compile Include="Proxy\RpcMessageData.cs" />
     <Compile Include="Proxy\ServerProxy.cs" />
-    <Compile Include="Domain\AuthResult.cs" />
+    <Compile Include="Domain\Response\AuthResponse.cs" />
     <Compile Include="Security\SecurityService.cs" />
     <Compile Include="Connection\ConnectionConfig.cs" />
     <Compile Include="Connection\ConnectionService.cs" />

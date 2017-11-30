@@ -130,7 +130,7 @@ namespace CarmackFX.Client
 			var service = this.Resolve<IDebugService>();
 			if (service != null)
 			{
-				service.WriteLog(message);
+				service.WriteLog(string.Format("[{0:yyyy-MM-dd HH:mm:ss}]{1}", DateTime.Now, message));
 			}
 		}
 

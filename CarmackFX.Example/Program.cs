@@ -1,12 +1,8 @@
 ﻿using CarmackFX.Client;
 using CarmackFX.Client.Connection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CarmackFX.Client.Protocol;
 using CarmackFX.Client.Security;
-using CarmackFX.Client.Domain;
+using CarmackFX.Client.Domain.Response;
 
 namespace CarmackFX.Example
 {
@@ -26,7 +22,7 @@ namespace CarmackFX.Example
 			var authTask = authService.Auth(authIn);
 			var authResult = authTask.ConfigureAwait(true).GetAwaiter().GetResult();
 
-			Console.WriteLine(authResult.Get<AuthResult>().User.Username);
+			Console.WriteLine(authResult.Get<AuthResponse>().Success);
 		}
 	}
 }

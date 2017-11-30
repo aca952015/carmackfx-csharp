@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CarmackFX.Client.Message;
 using CarmackFX.Client.Callback;
+using Newtonsoft.Json;
 
 namespace CarmackFX.Client.Connection
 {
@@ -19,7 +20,7 @@ namespace CarmackFX.Client.Connection
 			this.Config = new ConnectionConfig();
 		}
 
-		public void Connect()
+		public bool Connect()
 		{
 			Task.Run(new Action(() =>
 			{
@@ -27,13 +28,16 @@ namespace CarmackFX.Client.Connection
 				client = new ConnectClient(this.Config);
 				client.Received += (sender, ByteBuf) =>
 				{
-					this.ServiceManager.Log("recevie data from server: " + ByteBuf.Length);
-
 					try
 					{
 						MessageOut msgOut = MessageOut.Parse(ByteBuf);
 						if (msgOut != null)
 						{
+							if (msgOut.Mode != MessageMode.Heartbeat)
+							{
+								ServiceManager.Log(msgOut.ToJson());
+							}
+
 							if (msgOut.Mode == MessageMode.Result)
 							{
 								ServiceManager.Resolve<IMessageService>().Completed(msgOut);
@@ -72,12 +76,27 @@ namespace CarmackFX.Client.Connection
 					System.Threading.Thread.Sleep(10);
 				}
 			}));
+
+			DateTime start = DateTime.Now;
+			while(client == null || !client.IsRunning())
+			{
+				if((DateTime.Now - start).TotalSeconds > 2)
+				{
+					this.Disconnect();
+
+					return false;
+				}
+
+				System.Threading.Thread.Sleep(10);
+			}
+
+			return true;
 		}
 
 		private void SendHeartbeat()
 		{
 			// heartbeat
-			if ((DateTime.Now - lastHeartbeat).TotalSeconds > 2)
+			if ((DateTime.Now - lastHeartbeat).TotalSeconds > 3)
 			{
 				MessageIn messageIn = new MessageIn();
 				messageIn.Id = -1;
@@ -97,6 +116,16 @@ namespace CarmackFX.Client.Connection
 			}
 			catch (Exception e)
 			{
+				ServiceManager.Error(e);
+			}
+
+			try
+			{
+				ServiceManager.Resolve<IMessageService>().Clear();
+			}
+			catch(Exception e)
+			{
+				ServiceManager.Error(e);
 			}
 
 			client = null;
@@ -115,6 +144,15 @@ namespace CarmackFX.Client.Connection
 					}
 
 					client.Send(msgIn.Build());
+
+					if (msgIn.Type != MessageType.Heartbeat)
+					{
+						ServiceManager.Log(JsonConvert.SerializeObject(msgIn));
+					}
+				}
+				else
+				{
+					ServiceManager.Log("disconnected.");
 				}
 			}
 			catch (Exception ex)

@@ -2,8 +2,9 @@
 {
 	public enum MessageMode
 	{
-		Result,
-		Callback,
-		Error
+		Heartbeat		= 0,
+		Result			= 1,
+		Callback		= 2,
+		Error			= 3,
 	}
 }

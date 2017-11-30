@@ -13,5 +13,15 @@ namespace CarmackFX.Client
 		{
 
 		}
+
+		public T GetResponse<T>()
+		{
+			if(this.IsCompleted && Result != null && Result.IsSuccess)
+			{
+				return Result.Get<T>();
+			}
+
+			return default(T);
+		}
 	}
 }
